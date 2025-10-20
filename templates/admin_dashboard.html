@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Panel de Administración</h2>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Rol</th>
+    </tr>
+    {% for u in usuarios %}
+    <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.nombre }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.rol }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
