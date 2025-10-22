@@ -1,0 +1,282 @@
+/* ==========================================
+   ESTILOS UNIFICADOS — ITC CONSTRUCTORA
+   Paleta: Azul, Verde, Rojo, Amarillo
+   Fuente: Poppins
+   ========================================== */
+:root {
+  --color-azul: #1d2a7a;
+  --color-verde: #007b3d;
+  --color-rojo: #d3251c;
+  --color-amarillo: #f9c623;
+  --color-fondo: #f5f6fa;
+  --color-blanco: #ffffff;
+  --color-texto: #222;
+  --sombra: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --radio: 12px;
+  --transicion: all 0.3s ease;
+  --fuente: "Poppins", sans-serif;
+  --ancho-maximo: 1200px;
+}
+
+/* --------------------------- */
+/*  RESETEO GENERAL            */
+/* --------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--fuente);
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* --------------------------- */
+/*  NAVBAR                     */
+/* --------------------------- */
+.navbar {
+  background: linear-gradient(90deg, var(--color-azul), var(--color-verde));
+  color: var(--color-blanco);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  box-shadow: var(--sombra);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar img {
+  height: 65px;
+}
+
+.menu a {
+  color: var(--color-blanco);
+  text-decoration: none;
+  margin-left: 25px;
+  font-weight: 600;
+  transition: var(--transicion);
+}
+
+.menu a:hover {
+  color: var(--color-amarillo);
+}
+
+/* --------------------------- */
+/*  SECCIÓN PRINCIPAL (WELCOME)*/
+/* --------------------------- */
+.about-section {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: var(--color-blanco);
+}
+
+.about-section h1 {
+  color: var(--color-azul);
+  font-size: 2.6rem;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.about-section h1::after {
+  content: "";
+  width: 80px;
+  height: 4px;
+  background-color: var(--color-rojo);
+  display: block;
+  margin: 10px auto;
+  border-radius: 4px;
+}
+
+.about-section p {
+  color: #555;
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* --------------------------- */
+/*  SERVICIOS Y TARJETAS       */
+/* --------------------------- */
+.servicios-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  max-width: var(--ancho-maximo);
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+.servicio {
+  background-color: var(--color-blanco);
+  border-left: 6px solid var(--color-verde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 25px;
+  transition: var(--transicion);
+}
+
+.servicio:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-rojo);
+}
+
+.servicio h3 {
+  color: var(--color-azul);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.servicio p {
+  color: #555;
+  text-align: justify;
+}
+
+/* --------------------------- */
+/*  BOTONES                    */
+/* --------------------------- */
+.btn {
+  background-color: var(--color-verde);
+  color: var(--color-blanco);
+  padding: 12px 25px;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: var(--transicion);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px 5px;
+}
+
+.btn:hover {
+  background-color: var(--color-rojo);
+}
+
+.btn-sec {
+  background: var(--color-blanco);
+  color: var(--color-azul);
+  border: 2px solid var(--color-azul);
+}
+
+.btn-sec:hover {
+  background: var(--color-azul);
+  color: var(--color-blanco);
+}
+
+/* --------------------------- */
+/*  FORMULARIOS                */
+/* --------------------------- */
+form {
+  background: var(--color-blanco);
+  padding: 30px;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  max-width: 420px;
+  margin: 40px auto;
+  text-align: left;
+}
+
+form label {
+  font-weight: 600;
+  color: var(--color-azul);
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: var(--radio);
+  transition: var(--transicion);
+  font-size: 15px;
+}
+
+form input:focus,
+form textarea:focus {
+  border-color: var(--color-verde);
+  box-shadow: 0 0 5px rgba(0, 123, 61, 0.3);
+  outline: none;
+}
+
+/* --------------------------- */
+/*  DASHBOARDS                 */
+/* --------------------------- */
+.dashboard {
+  max-width: var(--ancho-maximo);
+  margin: 60px auto;
+  background: var(--color-blanco);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 40px;
+}
+
+.dashboard h2 {
+  color: var(--color-azul);
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  border-bottom: 3px solid var(--color-amarillo);
+  padding-bottom: 10px;
+}
+
+/* --------------------------- */
+/*  FOOTER                     */
+/* --------------------------- */
+footer {
+  background: linear-gradient(90deg, var(--color-verde), var(--color-azul));
+  color: var(--color-blanco);
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  font-size: 0.9rem;
+}
+
+footer p {
+  margin-bottom: 8px;
+}
+
+.redes a {
+  color: var(--color-amarillo);
+  margin: 0 8px;
+  font-size: 1.3rem;
+  transition: var(--transicion);
+}
+
+.redes a:hover {
+  color: var(--color-blanco);
+}
+
+/* --------------------------- */
+/*  RESPONSIVE DESIGN          */
+/* --------------------------- */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .menu {
+    margin-top: 10px;
+  }
+
+  .menu a {
+    display: inline-block;
+    margin: 10px;
+  }
+
+  .about-section h1 {
+    font-size: 2rem;
+  }
+
+  form {
+    width: 90%;
+  }
+}

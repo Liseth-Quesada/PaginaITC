@@ -2,27 +2,27 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Constructora XYZ</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Constructora ITC{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <header style="background: #1f5a91; padding: 10px; color: white;">
-        <h1>Constructora XYZ</h1>
+
+    <!-- Barra de navegación -->
+    <header class="navbar">
+        <img src="{{ url_for('static', filename='img/LogoITC.png') }}" alt="INALDO TURIZO CORREA">
+        <nav class="menu">
+            <a href="{{ url_for('index') }}">Inicio</a>
+            <a href="#">Quienes somos</a>
+            <a href="#">Servicios</a>
+            <a href="#">Contacto</a>
+            <a href="{{ url_for('login') }}">Ingresar</a>
+        </nav>
     </header>
 
-    <main>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div style="padding: 10px; margin: 10px;">
-                    {% for category, message in messages %}
-                        <p>
-                            {{ message }}
-                        </p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
-    </main>
+    <!-- Contenido dinámico -->
+    {% block content %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

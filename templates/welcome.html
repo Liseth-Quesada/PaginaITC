@@ -1,12 +1,150 @@
 {% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
 {% block content %}
-<section style="padding: 40px; text-align: center;">
-    <h2>Bienvenido a Constructora XYZ</h2>
-    <p>Construimos el futuro con calidad, innovación y sostenibilidad.</p>
-    <h1>Proyecto de practicas</h1>
-    <div style="margin-top: 30px;">
-        <a href="{{ url_for('login') }}" class="btn">Iniciar Sesión</a>
-        <a href="{{ url_for('register') }}" class="btn btn-sec">Registrarse</a>
+
+<!-- Sección de título -->
+<section class="about-section">
+    <h1>INALDO DE JESUS TURIZO CORREA</h1>
+</section>
+
+<!-- Carrusel -->
+<div class="carrusel">
+    <div class="slides">
+        <img src="{{ url_for('static', filename='img/LogoITC.png') }}" alt="Imagen 1" class="slide">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Imagen 2" class="slide">
+        <img src="{{ url_for('static', filename='img/LogoITC.png') }}" alt="Imagen 3" class="slide">
+    </div>
+    <button class="prev" onclick="moveSlide(-1)">❮</button>
+    <button class="next" onclick="moveSlide(1)">❯</button>
+</div>
+
+<!-- Descripción -->
+<section class="about-section">
+    <p>
+        Somos una empresa de ingeniería que garantiza la calidad y seguridad en cada proyecto,
+        respaldada por un equipo profesional y un Sistema de Gestión Integral HSEQ bajo normas
+        ISO 9001:2015, ISO 45001:2018 e ISO 14001:2015.
+    </p>
+</section>
+
+<!-- Misión, Visión, Valores -->
+<section class="mvv-container">
+    <div class="mvv-item">
+        <img src="{{ url_for('static', filename='img/icono-mision.png') }}" alt="Misión">
+        <h3>Misión</h3>
+        <p>
+            Somos una empresa de ingeniería que diseña, construye y mantiene obras civiles
+            con un equipo profesional que asegura calidad y estabilidad en cada proyecto.
+        </p>
+    </div>
+
+    <div class="mvv-item">
+        <img src="{{ url_for('static', filename='img/icono-vision.png') }}" alt="Visión">
+        <h3>Visión</h3>
+        <p>
+            Ser en 2035 una empresa de ingeniería reconocida a nivel local, regional y nacional
+            por la calidad y cumplimiento en obras civiles, viales y de rocería.
+        </p>
+    </div>
+
+    <div class="mvv-item">
+        <img src="{{ url_for('static', filename='img/icono-valores.png') }}" alt="Valores">
+        <h3>Valores</h3>
+        <p>Compromiso, responsabilidad, innovación y respeto por el entorno.</p>
     </div>
 </section>
+
+<!-- Mapa -->
+<section class="about-section">
+    <h1>¿Dónde estamos ubicados?</h1>
+</section>
+
+<div style="width: 100%; text-align: center; margin-top: 30px;">
+    <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.817788050014!2d-75.39743812500816!3d9.304722693330226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5b35a9d1c32e05%3A0x68c7a3b8cbfbd3cb!2sCorporaci%C3%B3n%20Universitaria%20del%20Caribe%20-%20CECAR!5e0!3m2!1ses-419!2sco!4v1739999999999!5m2!1ses-419!2sco"
+        width="90%" height="400"
+        style="border:0; border-radius: 15px; box-shadow: 0px 4px 10px rgba(0,0,0,0.2);"
+        allowfullscreen="" loading="lazy"></iframe>
+</div>
+
+<!-- Servicios -->
+<section class="about-section">
+    <h1>Nuestros servicios</h1>
+</section>
+
+<section class="servicios-container">
+    <div class="servicio">
+        <img src="{{ url_for('static', filename='img/LogoITC.png') }}" alt="Servicios" height="200" width="250">
+        <h3>Estudios y Diseños</h3>
+        <ul>
+            <li>Localización, trazado y replanteo.</li>
+            <li>Diseños de planos arquitectónicos, topográficos, eléctricos, hidrosanitarios, estructurales, etc.</li>
+        </ul>
+    </div>
+
+    <div class="servicio">
+        <img src="{{ url_for('static', filename='img/LogoITC.png') }}" alt="Servicios" height="200" width="250">
+        <h3>Construcción mixta</h3>
+        <ul>
+            <li>Combinación de muros metálicos y ladrillos.</li>
+        </ul>
+    </div>
+
+    <div class="servicio">
+        <img src="{{ url_for('static', filename='img/LogoITC.png') }}" alt="Servicios" height="200" width="250">
+        <h3>Obras de infraestructura metálica</h3>
+        <ul>
+            <li>Diseño, fabricación y montaje de estructuras metálicas.</li>
+            <li>Soldadura, corte y ensamblaje.</li>
+            <li>Pintura y protección.</li>
+        </ul>
+    </div>
+</section>
+
+<div class="boton-container">
+    <button onclick="window.location.href='#'">Ver más</button>
+</div>
+
+<!-- Proyectos -->
+<section class="about-section">
+    <h1>Proyectos entregados</h1>
+</section>
+
+<section class="servicios-container">
+    <div class="servicio">
+        <img src="{{ url_for('static', filename='img/LogoITC.png') }}" alt="Servicios">
+        <h3>Cancha sintética Estación CENIT</h3>
+    </div>
+    <div class="servicio">
+        <img src="{{ url_for('static', filename='img/LogoITC.png') }}" alt="Servicios">
+        <h3>Obras de infraestructura metálica</h3>
+    </div>
+    <div class="servicio">
+        <img src="{{ url_for('static', filename='img/LogoITC.png') }}" alt="Servicios">
+        <h3>Eléctrica y Solar</h3>
+    </div>
+</section>
+
+<!-- Formulario de contacto -->
+<section class="servicios-container">
+    <div class="servicio">
+        <h3>Contáctanos</h3>
+        <form>
+            <label>Nombre completo:</label>
+            <input type="text" placeholder="Escribe tu nombre">
+
+            <label>Teléfono:</label>
+            <input type="tel" placeholder="Escribe tu teléfono">
+
+            <label>Correo:</label>
+            <input type="email" placeholder="Escribe tu correo">
+
+            <label>Mensaje:</label>
+            <textarea placeholder="Escribe tu mensaje"></textarea>
+
+            <button type="button" onclick="alert('¡Mensaje enviado!')">Enviar</button>
+        </form>
+    </div>
+</section>
+
 {% endblock %}
