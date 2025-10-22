@@ -1,3 +1,4 @@
+// Carrusel
 let currentIndex = 0;
 
 function moveSlide(direction) {
@@ -10,3 +11,19 @@ function moveSlide(direction) {
 
 // Cambio automático cada 5 segundos
 setInterval(() => moveSlide(1), 5000);
+
+
+// Carrusel de proyectos entregados
+  const carrusel = document.querySelector('.carrusel-items');
+  const next = document.querySelector('.next');
+  const prev = document.querySelector('.prev');
+  let scrollAmount = 0;
+
+  next.addEventListener('click', () => {
+    carrusel.scrollBy({ left: 350, behavior: 'smooth' });
+  });
+
+  prev.addEventListener('click', () => {
+    carrusel.scrollBy({ left: -350, behavior: 'smooth' });
+  });
+

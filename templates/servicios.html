@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+
+<!-- Servicios -->
+<section class="about-section">
+    <h1>Nuestros servicios</h1>
+</section>
+
+<section class="servicios-container">
+    <div class="servicio">
+        <img src="{{ url_for('static', filename='img/plano.png') }}" alt="Servicios" height="200" width="250">
+        <h3>Estudios y Diseños</h3>
+        <ul>
+            <li>Localización, trazado y replanteo.</li>
+            <li>Diseños de planos arquitectónicos, topográficos, eléctricos, hidrosanitarios, estructurales, etc.</li>
+        </ul>
+    </div>
+
+    <div class="servicio">
+        <img src="{{ url_for('static', filename='img/construccionmixta.jpg') }}" alt="Servicios" height="200"
+            width="250">
+        <h3>Construcción mixta</h3>
+        <ul>
+            <li>Combinación de muros metálicos y ladrillos.</li>
+        </ul>
+    </div>
+
+    <div class="servicio">
+        <img src="{{ url_for('static', filename='img/obraenmetal.jpg') }}" alt="Servicios" height="200" width="250">
+        <h3>Obras de infraestructura metálica</h3>
+        <ul>
+            <li>Diseño, fabricación y montaje de estructuras metálicas.</li>
+            <li>Soldadura, corte y ensamblaje.</li>
+            <li>Pintura y protección.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Formulario de cotización -->
+<section class="formulario-container">
+    <div class="formulario">
+        <h3 class="">Si estas interesado en cotizar para adquirir nuestros servicios haz click aquí</h3>
+
+        <div class="boton-container">
+            <button class="btn" type="button" onclick="window.location.href='login'">Cotizar</button>
+        </div>
+
+    </div>
+</section>
+
+<footer class="footer-bar">
+    <p>© 2025 Inaldo Turizo Correa — Construcción e Ingeniería responsable</p>
+</footer>
+
+
+{% endblock %}

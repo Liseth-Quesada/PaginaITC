@@ -13,8 +13,8 @@
         <img src="{{ url_for('static', filename='img/LogoITC.png') }}" alt="INALDO TURIZO CORREA">
         <nav class="menu">
             <a href="{{ url_for('index') }}">Inicio</a>
-            <a href="#">Quienes somos</a>
-            <a href="#">Servicios</a>
+            <a href="{{ url_for('quienes_somos') }}">Quienes somos</a>
+            <a href="{{ url_for('servicios') }}">Servicios</a>
             <a href="#">Contacto</a>
             <a href="{{ url_for('login') }}">Ingresar</a>
         </nav>

@@ -49,6 +49,13 @@ def inicializar_bd():
 def index():
     return render_template('welcome.html')
 
+@app.route('/quienes-somos')
+def quienes_somos():
+    return render_template('quienesomos.html')
+
+@app.route('/servicios')
+def servicios():
+    return render_template('servicios.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
