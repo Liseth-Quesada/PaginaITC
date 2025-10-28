@@ -130,3 +130,19 @@ def logout():
 if __name__ == '__main__':
     inicializar_bd()
     app.run(debug=True)
+
+@app.route('/user_dashboard', methods=['GET', 'POST'])
+def cotizacion():
+    if request.method == 'POST':
+        nombre_empresa = request.form['nombre_empresa']
+        nit_empresa = request.form['nit_empresa']
+        telefono = request.form['telefono']
+        direccion = request.form['direccion']
+        servicio = request.form['servicio']
+        fecha = request.form['fecha']
+
+        # Aquí podrías guardar los datos en la base de datos si lo deseas
+        flash('Cotización registrada con éxito', 'success')
+        return redirect(url_for('user_dashboard'))
+
+    return render_template('user_dashboard.html')

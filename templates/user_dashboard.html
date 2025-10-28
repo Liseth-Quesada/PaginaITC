@@ -1,5 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Panel del Usuario</h2>
-<p>Bienvenido a tu panel, {{ current_user.nombre }}. Aquí podrás ver tus proyectos y avances.</p>
+<p>Bienvenido a tu panel, {{ current_user.nombre }}. Aquí podrás dejar los datos para realizar una cotización.</p>
+
+<section class="formulario-container">
+    <div class="formulario">
+        <form action="{{ url_for('user_dashboard') }}" method="POST">
+            <div>
+                <label>Nombre de la empresa:</label>
+                <input type="text" name="nombre_empresa" required>
+            </div>
+            <div>
+                <label>NIT de la empresa:</label>
+                <input type="text" name="nit_empresa" required>
+            </div>
+            <div>
+                <label>Teléfono:</label>
+                <input type="text" name="telefono" required>
+            </div>
+            <div>
+                <label>Dirección:</label>
+                <input type="text" name="direccion" required>
+            </div>
+            <div>
+                <label>Servicio a cotizar:</label>
+                <input type="text" name="servicio" required>
+            </div>
+            <div>
+                <label>Fecha de solicitud:</label>
+                <input type="date" name="fecha" required>
+            </div>
+
+            <div class="boton-container">
+                <button type="submit" class="btn">Registrar</button>
+            </div>
+            
+        </form>
+    </div>
+
+</section>
+
+
+<footer class="footer-bar">
+    <p>© 2025 Inaldo Turizo Correa — Construcción e Ingeniería responsable</p>
+</footer>
+
+
 {% endblock %}

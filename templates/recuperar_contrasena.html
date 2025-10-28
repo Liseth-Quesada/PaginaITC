@@ -3,22 +3,24 @@
 
 <section class="formulario-container">
     <div class="formulario">
-        <h2>Registro de Usuario</h2>
+        <h3>Recuperar contraseña</h3>
         <form method="POST">
-            <input type="text" name="nombre" placeholder="Nombre completo" required>
             <input type="email" name="email" placeholder="Correo electrónico" required>
-            <input type="tel" name="tel" placeholder="Telefono" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
-            
+
             <div class="boton-container">
-                <button class="btn" type="submit">Registrarse</button>
+                <button class="btn" type="submit">Enviar</button>
             </div>
+            
         </form>
+
+        
+
     </div>
 </section>
+<p>¿No tienes cuenta? <a href="{{ url_for('register') }}">Regístrate aquí</a></p>
+
 
 <footer class="footer-bar">
     <p>© 2025 Inaldo Turizo Correa — Construcción e Ingeniería responsable</p>
 </footer>
-
 {% endblock %}
