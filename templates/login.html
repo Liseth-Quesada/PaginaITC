@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Iniciar Sesión</h2>
-<form method="POST">
-    <input type="email" name="email" placeholder="Correo electrónico" required>
-    <input type="password" name="password" placeholder="Contraseña" required>
-    <button type="submit">Ingresar</button>
-</form>
+
+<section class="formulario-container">
+    <div class="formulario">
+        <h3>Iniciar sesion</h3>
+        <form method="POST">
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+
+            <div class="boton-container">
+                <button class="btn" type="submit">Ingresar</button>
+            </div>
+        </form>
+    </div>
+</section>
 <p>¿No tienes cuenta? <a href="{{ url_for('register') }}">Regístrate aquí</a></p>
 {% endblock %}

@@ -102,6 +102,7 @@ body {
   height: 70vh; 
   overflow: hidden;
   background-color: var(--color-gris);
+   
 }
 
 .slides {
@@ -134,6 +135,8 @@ body {
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   padding: 30px 0;
+  white-space: nowrap; /* Mantiene las tarjetas en una línea */
+  
 }
 
 /* Contenedor de los elementos */
@@ -154,6 +157,7 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
   overflow: hidden;
+  display: inline-block; /* Se alinean horizontalmente */
 }
 
 .item:hover {
@@ -335,7 +339,7 @@ body {
   box-shadow: var(--sombra);
   padding: 25px;
   width: 100%;
-  max-width: 420px; /* controla el tamaño máximo del cuadro */
+  max-width: 500px; /* controla el tamaño máximo del cuadro */
   transition: var(--transicion);
   color: var(--color-azul);
   margin-bottom: 10px;
