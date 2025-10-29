@@ -39,9 +39,9 @@ def inicializar_bd():
             )
             db.session.add(admin)
             db.session.commit()
-            print("✅ Usuario administrador creado (admin@constructora.com / admin123)")
+            print("Usuario administrador creado (admin@constructora.com / admin123)")
         else:
-            print("ℹ️ Usuario administrador ya existe.")
+            print("Usuario administrador ya existe.")
 
 
 # --- RUTAS ---
@@ -123,10 +123,6 @@ def logout():
     flash('Sesión cerrada correctamente', 'info')
     return redirect(url_for('login'))
 
-if __name__ == '__main__':
-    inicializar_bd()
-    app.run(debug=True)
-
 @app.route('/user_dashboard', methods=['GET', 'POST'])
 def cotizacion():
     if request.method == 'POST':
@@ -142,3 +138,9 @@ def cotizacion():
         return redirect(url_for('user_dashboard'))
 
     return render_template('user_dashboard.html')
+
+
+#-- INICIAR LA APLICACIÓN ---
+if __name__ == '__main__':
+    inicializar_bd()
+    app.run(debug=True, port=5050)
