@@ -56,12 +56,15 @@
     <h1>¿Dónde estamos ubicados?</h1>
 </section>
 
-<div style="width: 100%; text-align: center; margin-top: 30px;">
-    <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.817788050014!2d-75.39743812500816!3d9.304722693330226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e5b35a9d1c32e05%3A0x68c7a3b8cbfbd3cb!2sCorporaci%C3%B3n%20Universitaria%20del%20Caribe%20-%20CECAR!5e0!3m2!1ses-419!2sco!4v1739999999999!5m2!1ses-419!2sco"
-        width="90%" height="400" style="border:0; border-radius: 15px; box-shadow: 0px 4px 10px rgba(0,0,0,0.2);"
-        allowfullscreen="" loading="lazy"></iframe>
-</div>
+<section class="mapa-section">
+    <div class="mapa-wrapper">
+        <div class="mapa-container">
+            <iframe src="https://www.google.com/maps?q=9.249376135053513,-74.76317354660956&hl=es;z=15&output=embed"
+                allowfullscreen="" loading="lazy">
+            </iframe>
+        </div>
+    </div>
+</section>
 
 <!-- Servicios -->
 <section class="about-section">
@@ -99,7 +102,7 @@
 </section>
 
 <div>
-    <button class="btn" onclick="window.location.href='#'">Ver más</button>
+    <button class="btn" onclick="window.location.href='servicios'">Ver más</button>
 </div>
 
 <!-- Proyectos -->
@@ -173,8 +176,9 @@
 <!-- Formulario de contacto -->
 <section class="formulario-container">
     <div class="formulario">
-        <h2>Contáctanos</h2>
         <form>
+            <h2>Contáctanos</h2>
+
             <label>Nombre completo:</label>
             <input type="text" placeholder="Escribe tu nombre">
 

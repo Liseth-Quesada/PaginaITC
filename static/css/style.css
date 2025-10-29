@@ -7,7 +7,7 @@
   --color-verde: #007b3d;
   --color-rojo: #d3251c;
   --color-amarillo: #f9c623;
-  --color-fondo: #f5f6fa;
+  --color-fondo: #ffffff;
   --color-blanco: #ffffff;
   --color-texto: #222;
   --sombra: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -102,7 +102,6 @@ body {
   height: 70vh;
   overflow: hidden;
   background-color: var(--color-gris);
-
 }
 
 .slides {
@@ -110,10 +109,11 @@ body {
   width: 100%;
   height: 100%;
   transition: transform 0.6s ease-in-out;
+  will-change: transform;
 }
 
 .slide {
-  min-width: 100%;
+  flex: 0 0 100%; 
   height: 70vh;
   object-fit: cover;
   object-position: center;
@@ -136,8 +136,6 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   padding: 30px 0;
   white-space: nowrap;
-  /* Mantiene las tarjetas en una línea */
-
 }
 
 /* Contenedor de los elementos */
@@ -323,6 +321,7 @@ body {
 .boton-container {
   display: flex;
   justify-content: center;
+  margin: 12px;
 }
 
 /*  Formulario de contacto   */
@@ -335,13 +334,11 @@ body {
 }
 
 .formulario {
-  background-color: var(--color-blanco);
+  background-color: #ffffff;
   border-radius: var(--radio);
-
   padding: 25px;
   width: 100%;
   max-width: 500px;
-  /* controla el tamaño máximo del cuadro */
   transition: var(--transicion);
   color: var(--color-azul);
   margin-bottom: 10px;
@@ -366,7 +363,7 @@ body {
 }
 
 form {
-  background: var(--color-blanco);
+  background: #ffffff;
   padding: 30px;
   border-radius: var(--radio);
   box-shadow: var(--sombra);
@@ -420,6 +417,125 @@ form textarea:focus {
 .footer-bar p {
   margin: 0;
   color: var(--color-blanco);
+}
+
+/* Experiencia */
+.experiencia {
+  text-align: center;
+  padding: 40px 0;
+  background-color: #ffffff;
+}
+
+.experiencia h2 {
+  color: #1d2a7a;
+  margin-bottom: 25px;
+  font-size: 1.4rem;
+}
+
+.carrusel-experiencia {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: var(--radio);
+}
+ 
+.contenedor-cards {
+  overflow: hidden;
+  width: 80%;
+}
+
+.cards {
+  display: flex;
+  gap: 15px;
+  transition: transform 0.5s ease-in-out;
+}
+
+.card {
+  background-color: #ffffff;
+  border-left: 6px solid var(--color-verde);
+  border-radius: 6px;
+  min-width: 220px;
+  max-width: 220px;
+  padding: 15px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--color-azul);
+}
+
+.card p {
+  font-size: 0.9rem;
+}
+
+.btn-prev,
+.btn-next {
+  background-color: #1d2a7a;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-prev:hover,
+.btn-next:hover {
+  background-color: #1d2a7a;
+}
+
+.btn-prev {
+  margin-right: 15px;
+}
+
+.btn-next {
+  margin-left: 15px;
+}
+
+/* Mapa */
+.mapa-section {
+  text-align: center;
+  padding: 50px 0;
+  background: #ffffff;
+}
+
+.mapa-section h2 {
+  color: #1f5a91;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mapa-container {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mapa-container:hover {
+  transform: scale(1.01);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.mapa-container iframe {
+  width: 100%;
+  height: 420px;
+  border: none;
 }
 
 /*  DASHBOARDS                 */

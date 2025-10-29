@@ -99,7 +99,6 @@ def register():
 
     return render_template('register.html')
 
-
 @app.route('/admin')
 @login_required
 def admin_dashboard():
@@ -110,7 +109,6 @@ def admin_dashboard():
     usuarios = User.query.all()
     return render_template('admin_dashboard.html', usuarios=usuarios)
 
-
 @app.route('/user')
 @login_required
 def user_dashboard():
@@ -118,14 +116,12 @@ def user_dashboard():
         return redirect(url_for('admin_dashboard'))
     return render_template('user_dashboard.html')
 
-
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     flash('Sesión cerrada correctamente', 'info')
     return redirect(url_for('login'))
-
 
 if __name__ == '__main__':
     inicializar_bd()
