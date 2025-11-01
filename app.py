@@ -43,7 +43,6 @@ def inicializar_bd():
         else:
             print("Usuario administrador ya existe.")
 
-
 # --- RUTAS ---
 @app.route('/')
 def index():
