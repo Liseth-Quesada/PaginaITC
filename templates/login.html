@@ -1,21 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
 
-<section class="formulario-container">
-    <div class="formulario">  
-        <form method="POST">
-            <h2>Iniciar sesion</h2>
-            <input type="email" name="email" placeholder="Correo electrónico" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
-            
-            <div class="boton-container">
-                <button class="btn" type="submit">Ingresar</button>
-            </div>
-            
-            <p>¿No tienes cuenta? <a href="{{ url_for('register') }}">Regístrate aquí</a></p>
-        </form>
+<section class="hero">
+    <img class="hero-bg" src="{{ url_for('static', filename='img/ImgCarrusel2.jpg') }}" alt="Fondo hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        
+        <div class="formulario">
+            <form method="POST">
+                <h2>Iniciar sesion</h2>
+                <input type="email" name="email" placeholder="Correo electrónico" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+
+                <div class="boton-container">
+                    <button class="btn" type="submit">Ingresar</button>
+                </div>
+
+                <p>¿No tienes cuenta? <a href="{{ url_for('register') }}">Regístrate aquí</a></p>
+            </form>
+        </div>
     </div>
 </section>
+
+
 
 <footer class="footer-bar">
     <p>© 2025 Inaldo Turizo Correa — Construcción e Ingeniería responsable</p>

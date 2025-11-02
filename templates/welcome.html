@@ -11,77 +11,49 @@
         <p class="lead">Construcción e ingeniería responsable — Calidad, seguridad y cumplimiento en cada obra.</p>
         <div class="hero-ctas">
             <a class="btn" href="{{ url_for('servicios') }}">Nuestros servicios</a>
-            <a class="btn btn-sec" href="{{ url_for('login ') }}">Solicita cotización</a>
+            <a class="btn btn-sec" href="{{ url_for('login') }}">Solicita cotización</a>
         </div>
     </div>
 </section>
-
-<!-- <section>
-   Introducción
-    <section class="about-section">
-        <p>
-            Somos una empresa de ingeniería que garantiza la calidad y seguridad en cada proyecto,
-            respaldada por un equipo profesional y un Sistema de Gestión Integral HSEQ bajo normas
-            ISO 9001:2015, ISO 45001:2018 e ISO 14001:2015.
-        </p>
-    </section>
- Misión, Visión, Valores (tarjetas) 
-    <section class="servicios-container">
-        <div class="servicio card-mv">
-            <h3>Misión</h3>
-            <p>Diseñar, construir y mantener obras civiles con profesionalismo, garantizando calidad, seguridad y
-                cumplimiento.</p>
-        </div>
-
-        <div class="servicio card-mv">
-            <h3>Visión</h3>
-            <p>Ser reconocidos en la región y el país por la excelencia en proyectos civiles, viales y de
-                infraestructura.</p>
-        </div>
-
-        <div class="servicio card-mv">
-            <h3>Valores</h3>
-            <p>Compromiso, responsabilidad, innovación y respeto por el entorno.</p>
-        </div>
-    </section>
-</section> -->
 
 <section class="info-empresa">
-  <div class="descripcion">
-    <p>
-      Somos una empresa de ingeniería que garantiza la calidad y seguridad en cada proyecto,
-      respaldada por un equipo profesional y un Sistema de Gestión Integral HSEQ bajo normas
-      ISO 9001:2015, ISO 45001:2018 e ISO 14001:2015.
-    </p>
-  </div>
+    <div class="info-container">
+        <!-- Columna izquierda -->
+        <div class="info-descripcion">
+            <p>
+                Somos una empresa de ingeniería que garantiza la calidad y seguridad en cada proyecto,
+                respaldada por un equipo profesional y un Sistema de Gestión Integral HSEQ bajo normas
+                ISO 9001:2015, ISO 45001:2018 e ISO 14001:2015.
+            </p>
+        </div>
 
-  <div class="info-corporativa">
-    <div class="card-info">
-      <h3>Misión</h3>
-      <p>
-        Diseñar, construir y mantener obras civiles con profesionalismo, garantizando calidad,
-        seguridad y cumplimiento.
-      </p>
-    </div>
+        <!-- Columna derecha -->
+        <div class="info-corporativa">
+            <div class="bloque-info">
+                <div class="bloque-titulo">Misión</div>
+                <div class="bloque-texto">
+                    Diseñar, construir y mantener obras civiles con profesionalismo, garantizando calidad,
+                    seguridad y cumplimiento.
+                </div>
+            </div>
 
-    <div class="card-info">
-      <h3>Visión</h3>
-      <p>
-        Ser reconocidos en la región y el país por la excelencia en proyectos civiles, viales
-        y de infraestructura.
-      </p>
-    </div>
+            <div class="bloque-info">
+                <div class="bloque-titulo">Visión</div>
+                <div class="bloque-texto">
+                    Ser reconocidos en la región y el país por la excelencia en proyectos civiles, viales
+                    y de infraestructura.
+                </div>
+            </div>
 
-    <div class="card-info">
-      <h3>Valores</h3>
-      <p>
-        Compromiso, responsabilidad, innovación y respeto por el entorno.
-      </p>
+            <div class="bloque-info">
+                <div class="bloque-titulo">Valores</div>
+                <div class="bloque-texto">
+                    Compromiso, responsabilidad, innovación y respeto por el entorno.
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
-    
-
 
 <!-- Servicios destacados -->
 <section class="about-section">
@@ -186,40 +158,16 @@
     <h1>¿Dónde estamos ubicados?</h1>
 </section>
 
-<section class="mapa-section">
-    <div class="mapa-wrapper">
-        <div class="mapa-container">
-            <iframe src="https://www.google.com/maps?q=9.249376135053513,-74.76317354660956&hl=es;z=15&output=embed"
-                allowfullscreen="" loading="lazy">
-            </iframe>
-        </div>
-    </div>
+<section class="mapa-seccion">
+  <div class="mapa-contenedor">
+    <iframe
+      src="https://www.google.com/maps?q=9.249376135053513,-74.76317354660956&z=16&output=embed"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
+  </div>
 </section>
 
-<!-- Formulario de contacto -->
-<section class="formulario-container">
-    <div class="formulario">
-        <form>
-            <h2>Contáctanos</h2>
-
-            <label>Nombre completo:</label>
-            <input type="text" placeholder="Escribe tu nombre">
-
-            <label>Teléfono:</label>
-            <input type="tel" maxlength="10" placeholder="Escribe tu teléfono">
-
-            <label>Correo:</label>
-            <input type="email" placeholder="Escribe tu correo">
-
-            <label>Mensaje:</label>
-            <textarea placeholder="Escribe tu mensaje"></textarea>
-
-            <div class="boton-container">
-                <button class="btn" type="button" onclick="alert('¡Mensaje enviado!')">Enviar</button>
-            </div>
-        </form>
-    </div>
-</section>
 
 <footer class="footer-bar">
     <p>© 2025 Inaldo Turizo Correa — Construcción e Ingeniería responsable</p>
