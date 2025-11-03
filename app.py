@@ -2,10 +2,15 @@ from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+import os
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'clave_secreta_segura'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -18,6 +23,24 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
     rol = db.Column(db.String(20), nullable=False, default='usuario')
+    proyectos = db.relationship('Proyecto', backref='usuario', lazy=True)
+
+
+# --- MODELO DE PROYECTO ---
+class Proyecto(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre_empresa = db.Column(db.String(100), nullable=False)
+    nit_empresa = db.Column(db.String(20), nullable=False)
+    telefono = db.Column(db.String(20), nullable=False)
+    direccion = db.Column(db.String(200), nullable=False)
+    servicio = db.Column(db.String(50), nullable=False)
+    fecha = db.Column(db.Date, nullable=False)
+    presupuesto = db.Column(db.Float, nullable=False)
+    descripcion = db.Column(db.Text, nullable=False)
+    archivo_tecnico = db.Column(db.String(200))  # Ruta del archivo subido
+    plano = db.Column(db.String(200))  # Ruta del plano subido
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    fecha_creacion = db.Column(db.DateTime, default=db.func.current_timestamp())
 
 
 @login_manager.user_loader
@@ -29,6 +52,9 @@ def load_user(user_id):
 def inicializar_bd():
     with app.app_context():
         db.create_all()
+        # Crear carpeta uploads si no existe
+        if not os.path.exists(app.config['UPLOAD_FOLDER']):
+            os.makedirs(app.config['UPLOAD_FOLDER'])
         admin = User.query.filter_by(email='admin@constructora.com').first()
         if not admin:
             admin = User(
@@ -113,7 +139,9 @@ def admin_dashboard():
 def user_dashboard():
     if current_user.rol == 'admin':
         return redirect(url_for('admin_dashboard'))
-    return render_template('user_dashboard.html')
+    # Obtener proyectos del usuario para mostrar
+    proyectos = Proyecto.query.filter_by(user_id=current_user.id).all()
+    return render_template('user_dashboard.html', proyectos=proyectos)
 
 @app.route('/logout')
 @login_required
@@ -123,6 +151,7 @@ def logout():
     return redirect(url_for('login'))
 
 @app.route('/user_dashboard', methods=['GET', 'POST'])
+@login_required
 def cotizacion():
     if request.method == 'POST':
         nombre_empresa = request.form['nombre_empresa']
@@ -131,12 +160,48 @@ def cotizacion():
         direccion = request.form['direccion']
         servicio = request.form['servicio']
         fecha = request.form['fecha']
+        presupuesto = request.form['presupuesto']
+        descripcion = request.form['descripcion']
 
-        # Aquí podrías guardar los datos en la base de datos si lo deseas
+        # Manejo de archivos
+        archivo_tecnico_filename = None
+        plano_filename = None
+
+        if 'archivo_tecnico' in request.files:
+            archivo_tecnico = request.files['archivo_tecnico']
+            if archivo_tecnico.filename != '':
+                archivo_tecnico_filename = secure_filename(archivo_tecnico.filename)
+                archivo_tecnico.save(os.path.join(app.config['UPLOAD_FOLDER'], archivo_tecnico_filename))
+
+        if 'plano' in request.files:
+            plano = request.files['plano']
+            if plano.filename != '':
+                plano_filename = secure_filename(plano.filename)
+                plano.save(os.path.join(app.config['UPLOAD_FOLDER'], plano_filename))
+
+        # Guardar en base de datos
+        nuevo_proyecto = Proyecto(
+            nombre_empresa=nombre_empresa,
+            nit_empresa=nit_empresa,
+            telefono=telefono,
+            direccion=direccion,
+            servicio=servicio,
+            fecha=datetime.strptime(fecha, '%Y-%m-%d').date(),
+            presupuesto=float(presupuesto),
+            descripcion=descripcion,
+            archivo_tecnico=archivo_tecnico_filename,
+            plano=plano_filename,
+            user_id=current_user.id
+        )
+        db.session.add(nuevo_proyecto)
+        db.session.commit()
+
         flash('Cotización registrada con éxito', 'success')
         return redirect(url_for('user_dashboard'))
 
-    return render_template('user_dashboard.html')
+    # Obtener proyectos del usuario para mostrar
+    proyectos = Proyecto.query.filter_by(user_id=current_user.id).all()
+    return render_template('user_dashboard.html', proyectos=proyectos)
 
 
 #-- INICIAR LA APLICACIÓN ---

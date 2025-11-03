@@ -23,7 +23,7 @@
                 <h2>Solicitud de Cotización</h2>
                 <p class="form-subtitle">Complete los detalles de su proyecto para recibir una cotización personalizada</p>
                 
-                <form action="{{ url_for('user_dashboard') }}" method="POST" class="cotizacion-form">
+                <form action="{{ url_for('cotizacion') }}" method="POST" enctype="multipart/form-data" class="cotizacion-form">
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Nombre de la empresa</label>
@@ -71,12 +71,57 @@
                             <label>Descripción del proyecto</label>
                             <textarea name="descripcion" rows="4" placeholder="Describa los detalles específicos de su proyecto..." required></textarea>
                         </div>
+
+                        <div class="form-group full-width">
+                            <label>Documento técnico (opcional)</label>
+                            <input type="file" name="archivo_tecnico" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Plano o dibujo (opcional)</label>
+                            <input type="file" name="plano" accept=".pdf,.jpg,.jpeg,.png,.dwg">
+                        </div>
                     </div>
 
                     <div class="form-footer">
                         <button type="submit" class="btn btn-cotizar">Solicitar Cotización</button>
                     </div>
                 </form>
+            </div>
+        </section>
+
+        <!-- Panel izquierdo: Proyectos del usuario -->
+        <section class="proyectos-panel">
+            <div class="proyectos-card">
+                <h2>Mis Proyectos</h2>
+                <p class="form-subtitle">Historial de cotizaciones solicitadas</p>
+
+                {% if proyectos %}
+                    <div class="proyectos-list">
+                        {% for proyecto in proyectos %}
+                        <div class="proyecto-item">
+                            <h3>{{ proyecto.nombre_empresa }}</h3>
+                            <p><strong>Servicio:</strong> {{ proyecto.servicio }}</p>
+                            <p><strong>Fecha de inicio:</strong> {{ proyecto.fecha.strftime('%d/%m/%Y') }}</p>
+                            <p><strong>Presupuesto:</strong> ${{ "{:,.0f}".format(proyecto.presupuesto) }} COP</p>
+                            <p><strong>Descripción:</strong> {{ proyecto.descripcion[:100] }}{% if proyecto.descripcion|length > 100 %}...{% endif %}</p>
+                            {% if proyecto.archivo_tecnico %}
+                                <p><strong>Documento técnico:</strong> <a href="{{ url_for('static', filename='uploads/' + proyecto.archivo_tecnico) }}" target="_blank">Ver archivo</a></p>
+                            {% endif %}
+                            {% if proyecto.plano %}
+                                <p><strong>Plano:</strong> <a href="{{ url_for('static', filename='uploads/' + proyecto.plano) }}" target="_blank">Ver plano</a></p>
+                            {% endif %}
+                            <p><small>Fecha de solicitud: {{ proyecto.fecha_creacion.strftime('%d/%m/%Y %H:%M') }}</small></p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No has solicitado cotizaciones aún.</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+</div>
             </div>
         </section>
     </div>
