@@ -3,27 +3,24 @@
 
 <section class="login-section">
     <img class="login-bg" src="{{ url_for('static', filename='img/ImgCarrusel2.jpg') }}" alt="Fondo login">
+    
+    <form method="POST" class="login-form">
+        <h2>Iniciar Sesión</h2>
+        <div class="form-group">
+            <input type="email" name="email" placeholder="Correo electrónico" required>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Contraseña" required>
+        </div>
 
-    <div class="login-box">
-        <form method="POST" class="login-form">
-            <h2>Iniciar Sesión</h2>
-            <div class="form-group">
-                <input type="email" name="email" placeholder="Correo electrónico" required>
-            </div>
-            <div class="form-group">
-                <input type="password" name="password" placeholder="Contraseña" required>
-            </div>
+        <div class="boton-container">
+            <button class="btn" type="submit">Ingresar</button>
+        </div>
 
-            <div class="boton-container">
-                <button class="btn" type="submit">Ingresar</button>
-            </div>
-
-            <div class="login-footer">
-                <p>¿No tienes cuenta? <a href="{{ url_for('register') }}">Regístrate aquí</a></p>
-                <a href="" class="forgot-password">¿Olvidaste tu contraseña?</a>
-            </div>
-        </form>
-    </div>
+        <div class="login-footer">
+            <p>¿No tienes cuenta? <a href="{{ url_for('register') }}">Regístrate aquí</a></p>
+        </div>
+    </form>
 </section>
 
 

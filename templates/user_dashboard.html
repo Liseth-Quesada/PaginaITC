@@ -1,44 +1,86 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Panel del Usuario</h2>
-<p>Bienvenido a tu panel, {{ current_user.nombre }}. Aquí podrás dejar los datos para realizar una cotización.</p>
 
-<section class="formulario-container">
-    <div class="formulario">
-        <form action="{{ url_for('user_dashboard') }}" method="POST">
-            <div>
-                <label>Nombre de la empresa:</label>
-                <input type="text" name="nombre_empresa" required>
-            </div>
-            <div>
-                <label>NIT de la empresa:</label>
-                <input type="text" name="nit_empresa" required>
-            </div>
-            <div>
-                <label>Teléfono:</label>
-                <input type="text" name="telefono" required>
-            </div>
-            <div>
-                <label>Dirección:</label>
-                <input type="text" name="direccion" required>
-            </div>
-            <div>
-                <label>Servicio a cotizar:</label>
-                <input type="text" name="servicio" required>
-            </div>
-            <div>
-                <label>Fecha de solicitud:</label>
-                <input type="date" name="fecha" required>
-            </div>
+<div class="dashboard-container">
+    <!-- Bienvenida y resumen -->
+    <section class="dashboard-header">
+        <div class="welcome-card">
+            <h1>Bienvenido, {{ current_user.nombre }}</h1>
+        </div>
+    </section>
 
-            <div class="boton-container">
-                <button type="submit" class="btn">Registrar</button>
-            </div>
+    <div class="dashboard-grid">
+        <!-- Panel izquierdo: Información de la empresa -->
+        <section class="info-panel">
             
-        </form>
-    </div>
 
-</section>
+           
+        </section>
+
+        <!-- Panel derecho: Formulario de cotización -->
+        <section class="cotizacion-panel">
+            <div class="form-card">
+                <h2>Solicitud de Cotización</h2>
+                <p class="form-subtitle">Complete los detalles de su proyecto para recibir una cotización personalizada</p>
+                
+                <form action="{{ url_for('user_dashboard') }}" method="POST" class="cotizacion-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombre de la empresa</label>
+                            <input type="text" name="nombre_empresa" required placeholder="Ej: Constructora ABC S.A.S">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>NIT de la empresa</label>
+                            <input type="text" name="nit_empresa" required placeholder="Ej: 900.123.456-7">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Teléfono de contacto</label>
+                            <input type="tel" name="telefono" required placeholder="Ej: (604) 123-4567">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Dirección del proyecto</label>
+                            <input type="text" name="direccion" required placeholder="Dirección completa del proyecto">
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Tipo de servicio requerido</label>
+                            <select name="servicio" required>
+                                <option value="">Seleccione un servicio</option>
+                                <option value="estudios">Estudios y Diseños</option>
+                                <option value="construccion">Construcción Mixta</option>
+                                <option value="metalica">Infraestructura Metálica</option>
+                                <option value="civil">Obras Civiles</option>
+                                <option value="mantenimiento">Mantenimiento Industrial</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fecha estimada de inicio</label>
+                            <input type="date" name="fecha" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Presupuesto estimado</label>
+                            <input type="number" name="presupuesto" placeholder="Presupuesto en COP" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label>Descripción del proyecto</label>
+                            <textarea name="descripcion" rows="4" placeholder="Describa los detalles específicos de su proyecto..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-cotizar">Solicitar Cotización</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
 
 
 <footer class="footer-bar">
