@@ -2,16 +2,24 @@
 {% block title %}Inicio{% endblock %}
 {% block content %}
 
-<!-- Hero modernizado -->
-<section class="hero">
-    <img class="hero-bg" src="{{ url_for('static', filename='img/ImgCarrusel.jpg') }}" alt="Fondo hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <h1>INALDO DE JESUS TURIZO CORREA</h1>
-        <p class="lead">Construcción e ingeniería responsable — Calidad, seguridad y cumplimiento en cada obra.</p>
-        <div class="hero-ctas">
-            <a class="btn" href="{{ url_for('servicios') }}">Nuestros servicios</a>
-            <a class="btn btn-sec" href="{{ url_for('login') }}">Solicita cotización</a>
+<!-- Hero modernizado con estilo transparente -->
+<section class="hero-section">
+    <div class="hero-bg">
+        <img src="{{ url_for('static', filename='img/ImgCarrusel.jpg') }}" alt="Fondo hero">
+    </div>
+    <div class="hero-overlay-light"></div>
+    <div class="hero-container">
+        <div class="hero-content-transparent">
+            <h1>INALDO DE JESUS TURIZO CORREA</h1>
+            <p class="hero-subtitle">Construcción e ingeniería responsable — Calidad, seguridad y cumplimiento en cada obra.</p>
+            <div class="hero-buttons">
+                <a class="btn btn-primary" href="{{ url_for('servicios') }}">Nuestros servicios</a>
+                {% if current_user.is_authenticated %}
+                    <a class="btn btn-secondary" href="{{ url_for('user_dashboard') }}">Mi perfil</a>
+                {% else %}
+                    <a class="btn btn-secondary" href="{{ url_for('login') }}">Solicita cotización</a>
+                {% endif %}
+            </div>
         </div>
     </div>
 </section>
