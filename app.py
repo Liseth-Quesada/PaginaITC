@@ -150,6 +150,87 @@ def logout():
     flash('Sesión cerrada correctamente', 'info')
     return redirect(url_for('login'))
 
+@app.route('/proyecto/<int:proyecto_id>/eliminar', methods=['POST'])
+@login_required
+def eliminar_proyecto(proyecto_id):
+    proyecto = Proyecto.query.get_or_404(proyecto_id)
+
+    # Verificar que el proyecto pertenece al usuario actual
+    if proyecto.user_id != current_user.id:
+        flash('No tienes permiso para eliminar este proyecto', 'error')
+        return redirect(url_for('user_dashboard'))
+
+    # Eliminar archivos si existen
+    if proyecto.archivo_tecnico:
+        archivo_path = os.path.join(app.config['UPLOAD_FOLDER'], proyecto.archivo_tecnico)
+        if os.path.exists(archivo_path):
+            os.remove(archivo_path)
+
+    if proyecto.plano:
+        plano_path = os.path.join(app.config['UPLOAD_FOLDER'], proyecto.plano)
+        if os.path.exists(plano_path):
+            os.remove(plano_path)
+
+    # Eliminar de la base de datos
+    db.session.delete(proyecto)
+    db.session.commit()
+
+    flash('Proyecto eliminado correctamente', 'success')
+    return redirect(url_for('user_dashboard'))
+
+@app.route('/proyecto/<int:proyecto_id>/editar', methods=['GET', 'POST'])
+@login_required
+def editar_proyecto(proyecto_id):
+    proyecto = Proyecto.query.get_or_404(proyecto_id)
+
+    # Verificar que el proyecto pertenece al usuario actual
+    if proyecto.user_id != current_user.id:
+        flash('No tienes permiso para editar este proyecto', 'error')
+        return redirect(url_for('user_dashboard'))
+
+    if request.method == 'POST':
+        proyecto.nombre_empresa = request.form['nombre_empresa']
+        proyecto.nit_empresa = request.form['nit_empresa']
+        proyecto.telefono = request.form['telefono']
+        proyecto.direccion = request.form['direccion']
+        proyecto.servicio = request.form['servicio']
+        proyecto.fecha = datetime.strptime(request.form['fecha'], '%Y-%m-%d').date()
+        proyecto.presupuesto = float(request.form['presupuesto'])
+        proyecto.descripcion = request.form['descripcion']
+
+        # Manejo de archivos - solo actualizar si se suben nuevos
+        if 'archivo_tecnico' in request.files and request.files['archivo_tecnico'].filename != '':
+            # Eliminar archivo anterior si existe
+            if proyecto.archivo_tecnico:
+                old_path = os.path.join(app.config['UPLOAD_FOLDER'], proyecto.archivo_tecnico)
+                if os.path.exists(old_path):
+                    os.remove(old_path)
+
+            archivo_tecnico = request.files['archivo_tecnico']
+            archivo_tecnico_filename = secure_filename(archivo_tecnico.filename)
+            archivo_tecnico.save(os.path.join(app.config['UPLOAD_FOLDER'], archivo_tecnico_filename))
+            proyecto.archivo_tecnico = archivo_tecnico_filename
+
+        if 'plano' in request.files and request.files['plano'].filename != '':
+            # Eliminar archivo anterior si existe
+            if proyecto.plano:
+                old_path = os.path.join(app.config['UPLOAD_FOLDER'], proyecto.plano)
+                if os.path.exists(old_path):
+                    os.remove(old_path)
+
+            plano = request.files['plano']
+            plano_filename = secure_filename(plano.filename)
+            plano.save(os.path.join(app.config['UPLOAD_FOLDER'], plano_filename))
+            proyecto.plano = plano_filename
+
+        db.session.commit()
+        flash('Proyecto actualizado correctamente', 'success')
+        return redirect(url_for('user_dashboard'))
+
+    # Para GET, mostrar el formulario de edición
+    proyectos = Proyecto.query.filter_by(user_id=current_user.id).all()
+    return render_template('user_dashboard.html', proyectos=proyectos, proyecto_editar=proyecto)
+
 @app.route('/user_dashboard', methods=['GET', 'POST'])
 @login_required
 def cotizacion():
