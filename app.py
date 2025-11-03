@@ -231,6 +231,27 @@ def editar_proyecto(proyecto_id):
     proyectos = Proyecto.query.filter_by(user_id=current_user.id).all()
     return render_template('user_dashboard.html', proyectos=proyectos, proyecto_editar=proyecto)
 
+@app.route('/download/<filename>')
+@login_required
+def download_file(filename):
+    # Verificar que el archivo pertenece a un proyecto del usuario actual
+    proyecto = Proyecto.query.filter(
+        (Proyecto.archivo_tecnico == filename) | (Proyecto.plano == filename),
+        Proyecto.user_id == current_user.id
+    ).first()
+
+    if not proyecto:
+        flash('Archivo no encontrado o no tienes permiso para descargarlo', 'error')
+        return redirect(url_for('user_dashboard'))
+
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    if not os.path.exists(file_path):
+        flash('Archivo no encontrado en el servidor', 'error')
+        return redirect(url_for('user_dashboard'))
+
+    from flask import send_from_directory
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
+
 @app.route('/user_dashboard', methods=['GET', 'POST'])
 @login_required
 def cotizacion():

@@ -844,6 +844,7 @@ form textarea:focus {
   border-radius: var(--radio);
   box-shadow: var(--sombra);
   padding: 30px;
+  min-height: 600px;
 }
 
 .form-card h2 {
@@ -1011,7 +1012,14 @@ form textarea:focus {
 /* Action Buttons */
 .action-buttons {
   display: flex;
-  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-column {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   align-items: center;
 }
 

@@ -73,7 +73,7 @@
                         <label>Documento técnico (opcional)</label>
                         <input type="file" name="archivo_tecnico" accept=".pdf,.doc,.docx,.xls,.xlsx">
                         {% if proyecto_editar and proyecto_editar.archivo_tecnico %}
-                        <small class="file-info">Archivo actual: <a href="{{ url_for('static', filename='uploads/' + proyecto_editar.archivo_tecnico) }}" target="_blank">{{ proyecto_editar.archivo_tecnico }}</a></small>
+                        <small class="file-info">Archivo actual: <a href="{{ url_for('download_file', filename=proyecto_editar.archivo_tecnico) }}" download>{{ proyecto_editar.archivo_tecnico }}</a></small>
                         {% endif %}
                     </div>
 
@@ -81,7 +81,7 @@
                         <label>Plano o dibujo (opcional)</label>
                         <input type="file" name="plano" accept=".pdf,.jpg,.jpeg,.png,.dwg">
                         {% if proyecto_editar and proyecto_editar.plano %}
-                        <small class="file-info">Archivo actual: <a href="{{ url_for('static', filename='uploads/' + proyecto_editar.plano) }}" target="_blank">{{ proyecto_editar.plano }}</a></small>
+                        <small class="file-info">Archivo actual: <a href="{{ url_for('download_file', filename=proyecto_editar.plano) }}" download>{{ proyecto_editar.plano }}</a></small>
                         {% endif %}
                     </div>
                 </div>
@@ -127,10 +127,10 @@
                                 <td>${{ "{:,.0f}".format(proyecto.presupuesto) }} COP</td>
                                 <td>
                                     {% if proyecto.archivo_tecnico %}
-                                        <a href="{{ url_for('static', filename='uploads/' + proyecto.archivo_tecnico) }}" target="_blank" class="file-link">Doc</a>
+                                        <a href="{{ url_for('download_file', filename=proyecto.archivo_tecnico) }}" class="file-link" download>Doc</a>
                                     {% endif %}
                                     {% if proyecto.plano %}
-                                        <a href="{{ url_for('static', filename='uploads/' + proyecto.plano) }}" target="_blank" class="file-link">Plano</a>
+                                        <a href="{{ url_for('download_file', filename=proyecto.plano) }}" class="file-link" download>Plano</a>
                                     {% endif %}
                                     {% if not proyecto.archivo_tecnico and not proyecto.plano %}
                                         -
@@ -139,14 +139,16 @@
                                 <td>{{ proyecto.fecha_creacion.strftime('%d/%m/%Y %H:%M') }}</td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a href="{{ url_for('editar_proyecto', proyecto_id=proyecto.id) }}" class="btn-action btn-edit" title="Editar">
-                                            <i class="fas fa-edit"></i> Editar
-                                        </a>
-                                        <form method="POST" action="{{ url_for('eliminar_proyecto', proyecto_id=proyecto.id) }}" class="delete-form" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este proyecto?');">
-                                            <button type="submit" class="btn-action btn-delete" title="Eliminar">
-                                                <i class="fas fa-trash"></i> Eliminar
-                                            </button>
-                                        </form>
+                                        <div class="action-column">
+                                            <a href="{{ url_for('editar_proyecto', proyecto_id=proyecto.id) }}" class="btn-action btn-edit" title="Editar">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </a>
+                                            <form method="POST" action="{{ url_for('eliminar_proyecto', proyecto_id=proyecto.id) }}" class="delete-form" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este proyecto?');">
+                                                <button type="submit" class="btn-action btn-delete" title="Eliminar">
+                                                    <i class="fas fa-trash"></i> Eliminar
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
