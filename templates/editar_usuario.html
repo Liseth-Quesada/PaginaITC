@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="dashboard-container">
+    <!-- Bienvenida y resumen -->
+    <section class="dashboard-header">
+        <div class="welcome-card">
+            <h1>Editar Usuario</h1>
+        </div>
+    </section>
+
+    <div class="dashboard-grid">
+        <!-- Panel izquierdo: Formulario de edición -->
+        <section class="cotizacion-panel">
+            <div class="form-card">
+                <h2>Editar Usuario</h2>
+                <p class="form-subtitle">Modifica los datos del usuario</p>
+
+                <form action="{{ url_for('editar_usuario', usuario_id=usuario.id) }}" method="POST" class="cotizacion-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" name="nombre" value="{{ usuario.nombre }}" required placeholder="Nombre completo">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" value="{{ usuario.email }}" required placeholder="correo@ejemplo.com">
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Nueva Contraseña (opcional)</label>
+                            <input type="password" name="password" placeholder="Dejar vacío para mantener la actual">
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-cotizar">Actualizar Usuario</button>
+                        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-sec" style="margin-left: 10px;">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Panel derecho: Información del usuario -->
+        <section class="proyectos-panel">
+            <div class="proyectos-card">
+                <h2>Información del Usuario</h2>
+                <p class="form-subtitle">Detalles actuales</p>
+
+                <div class="info-usuario">
+                    <p><strong>ID:</strong> {{ usuario.id }}</p>
+                    <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+                    <p><strong>Email:</strong> {{ usuario.email }}</p>
+                    <p><strong>Rol:</strong> {{ usuario.rol }}</p>
+                    <p><strong>Proyectos creados:</strong> {{ usuario.proyectos|length }}</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<footer class="footer-bar">
+    <p>© 2025 Inaldo Turizo Correa — Construcción e Ingeniería responsable</p>
+</footer>
+
+{% endblock %}

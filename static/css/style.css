@@ -1376,4 +1376,21 @@ input:focus {
   .btn-registrar {
     grid-column: 1;
   }
+/* Información del usuario */
+.info-usuario {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid var(--color-verde);
+}
+
+.info-usuario p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: var(--color-texto);
+}
+
+.info-usuario strong {
+  color: var(--color-azul);
+}
 }

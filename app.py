@@ -132,7 +132,8 @@ def admin_dashboard():
         return redirect(url_for('user_dashboard'))
 
     usuarios = User.query.all()
-    return render_template('admin_dashboard.html', usuarios=usuarios)
+    proyectos = Proyecto.query.all()
+    return render_template('admin_dashboard.html', usuarios=usuarios, proyectos=proyectos)
 
 @app.route('/user')
 @login_required
@@ -234,14 +235,18 @@ def editar_proyecto(proyecto_id):
 @app.route('/download/<filename>')
 @login_required
 def download_file(filename):
-    # Verificar que el archivo pertenece a un proyecto del usuario actual
+    # Verificar que el archivo pertenece a un proyecto del usuario actual o es admin
     proyecto = Proyecto.query.filter(
-        (Proyecto.archivo_tecnico == filename) | (Proyecto.plano == filename),
-        Proyecto.user_id == current_user.id
+        (Proyecto.archivo_tecnico == filename) | (Proyecto.plano == filename)
     ).first()
 
     if not proyecto:
-        flash('Archivo no encontrado o no tienes permiso para descargarlo', 'error')
+        flash('Archivo no encontrado', 'error')
+        return redirect(url_for('user_dashboard'))
+
+    # Si no es admin, verificar que el proyecto pertenece al usuario actual
+    if current_user.rol != 'admin' and proyecto.user_id != current_user.id:
+        flash('No tienes permiso para descargar este archivo', 'error')
         return redirect(url_for('user_dashboard'))
 
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -251,6 +256,66 @@ def download_file(filename):
 
     from flask import send_from_directory
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
+
+@app.route('/usuario/<int:usuario_id>/editar', methods=['GET', 'POST'])
+@login_required
+def editar_usuario(usuario_id):
+    if current_user.rol != 'admin':
+        flash('No tienes permiso para acceder a esta página', 'error')
+        return redirect(url_for('user_dashboard'))
+
+    usuario = User.query.get_or_404(usuario_id)
+
+    if request.method == 'POST':
+        usuario.nombre = request.form['nombre']
+        usuario.email = request.form['email']
+
+        # Solo actualizar contraseña si se proporciona una nueva
+        if request.form['password']:
+            usuario.password = generate_password_hash(request.form['password'], method='pbkdf2:sha256')
+
+        db.session.commit()
+        flash('Usuario actualizado correctamente', 'success')
+        return redirect(url_for('admin_dashboard'))
+
+    return render_template('editar_usuario.html', usuario=usuario)
+
+@app.route('/usuario/<int:usuario_id>/eliminar', methods=['POST'])
+@login_required
+def eliminar_usuario(usuario_id):
+    if current_user.rol != 'admin':
+        flash('No tienes permiso para acceder a esta página', 'error')
+        return redirect(url_for('user_dashboard'))
+
+    usuario = User.query.get_or_404(usuario_id)
+
+    # No permitir eliminar al propio usuario admin
+    if usuario.id == current_user.id:
+        flash('No puedes eliminar tu propio usuario', 'error')
+        return redirect(url_for('admin_dashboard'))
+
+    # Eliminar todos los proyectos del usuario
+    proyectos = Proyecto.query.filter_by(user_id=usuario.id).all()
+    for proyecto in proyectos:
+        # Eliminar archivos si existen
+        if proyecto.archivo_tecnico:
+            archivo_path = os.path.join(app.config['UPLOAD_FOLDER'], proyecto.archivo_tecnico)
+            if os.path.exists(archivo_path):
+                os.remove(archivo_path)
+
+        if proyecto.plano:
+            plano_path = os.path.join(app.config['UPLOAD_FOLDER'], proyecto.plano)
+            if os.path.exists(plano_path):
+                os.remove(plano_path)
+
+        db.session.delete(proyecto)
+
+    # Eliminar el usuario
+    db.session.delete(usuario)
+    db.session.commit()
+
+    flash('Usuario y sus proyectos eliminados correctamente', 'success')
+    return redirect(url_for('admin_dashboard'))
 
 @app.route('/user_dashboard', methods=['GET', 'POST'])
 @login_required

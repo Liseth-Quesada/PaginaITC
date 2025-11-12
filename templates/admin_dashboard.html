@@ -1,20 +1,121 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Panel de Administración</h2>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Rol</th>
-    </tr>
-    {% for u in usuarios %}
-    <tr>
-        <td>{{ u.id }}</td>
-        <td>{{ u.nombre }}</td>
-        <td>{{ u.email }}</td>
-        <td>{{ u.rol }}</td>
-    </tr>
-    {% endfor %}
-</table>
+
+<div class="dashboard-container">
+    <!-- Bienvenida y resumen -->
+    <section class="dashboard-header">
+        <div class="welcome-card">
+            <h1>Bienvenido, Administrador</h1>
+        </div>
+    </section>
+<div class="dashboard-grid">
+    <!-- Panel izquierdo: Usuarios -->
+    <section class="cotizacion-panel">
+        <div class="form-card">
+            <h2>Usuarios Registrados</h2>
+            <p class="form-subtitle">Lista de todos los usuarios del sistema</p>
+
+            {% if usuarios %}
+                <div class="proyectos-table-container">
+                    <table class="proyectos-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for u in usuarios %}
+                            <tr>
+                                <td>{{ u.id }}</td>
+                                <td>{{ u.nombre }}</td>
+                                <td>{{ u.email }}</td>
+                                <td>{{ u.rol }}</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <div class="action-column">
+                                            <a href="{{ url_for('editar_usuario', usuario_id=u.id) }}" class="btn-action btn-edit" title="Editar">
+                                                <i class="fas fa-edit"></i> Editar
+                                            </a>
+                                            {% if u.id != current_user.id %}
+                                            <form method="POST" action="{{ url_for('eliminar_usuario', usuario_id=u.id) }}" class="delete-form" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
+                                                <button type="submit" class="btn-action btn-delete" title="Eliminar">
+                                                    <i class="fas fa-trash"></i> Eliminar
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p>No hay usuarios registrados aún.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Panel derecho: Proyectos -->
+    <section class="proyectos-panel">
+        <div class="proyectos-card">
+            <h2>Todos los Proyectos</h2>
+            <p class="form-subtitle">Historial de todas las cotizaciones solicitadas</p>
+
+            {% if proyectos %}
+                <div class="proyectos-table-container">
+                    <table class="proyectos-table">
+                        <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Servicio</th>
+                                <th>Fecha Inicio</th>
+                                <th>Presupuesto</th>
+                                <th>Archivos</th>
+                                <th>Fecha Solicitud</th>
+                                <th>Usuario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for proyecto in proyectos %}
+                            <tr>
+                                <td>{{ proyecto.nombre_empresa }}</td>
+                                <td>{{ proyecto.servicio }}</td>
+                                <td>{{ proyecto.fecha.strftime('%d/%m/%Y') }}</td>
+                                <td>${{ "{:,.0f}".format(proyecto.presupuesto) }} COP</td>
+                                <td>
+                                    {% if proyecto.archivo_tecnico %}
+                                        <a href="{{ url_for('download_file', filename=proyecto.archivo_tecnico) }}" class="file-link" download>Doc</a>
+                                    {% endif %}
+                                    {% if proyecto.plano %}
+                                        <a href="{{ url_for('download_file', filename=proyecto.plano) }}" class="file-link" download>Plano</a>
+                                    {% endif %}
+                                    {% if not proyecto.archivo_tecnico and not proyecto.plano %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>{{ proyecto.fecha_creacion.strftime('%d/%m/%Y %H:%M') }}</td>
+                                <td>{{ proyecto.usuario.nombre if proyecto.usuario else 'N/A' }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p>No hay proyectos aún.</p>
+            {% endif %}
+        </div>
+    </section>
+</div>
+</div>
+
+<footer class="footer-bar">
+    <p>© 2025 Inaldo Turizo Correa — Construcción e Ingeniería responsable</p>
+</footer>
+
 {% endblock %}
