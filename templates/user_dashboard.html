@@ -8,164 +8,235 @@
             <h1>Bienvenido, {{ current_user.nombre }}</h1>
         </div>
     </section>
-<div class="dashboard-grid">
-    <!-- Panel izquierdo: Formulario de cotización -->
-    <section class="cotizacion-panel">
-        <div class="form-card">
-            {% if proyecto_editar %}
-            <h2>Editar Proyecto</h2>
-            <p class="form-subtitle">Modifica los detalles de tu proyecto</p>
-            {% else %}
-            <h2>Solicitud de Cotización</h2>
-            <p class="form-subtitle">Complete los detalles de su proyecto para recibir una cotización personalizada</p>
-            {% endif %}
 
-            <form action="{% if proyecto_editar %}{{ url_for('editar_proyecto', proyecto_id=proyecto_editar.id) }}{% else %}{{ url_for('cotizacion') }}{% endif %}" method="POST" enctype="multipart/form-data" class="cotizacion-form">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label>Nombre de la empresa</label>
-                        <input type="text" name="nombre_empresa" value="{% if proyecto_editar %}{{ proyecto_editar.nombre_empresa }}{% endif %}" required placeholder="Ej: Constructora ABC S.A.S">
-                    </div>
-
-                    <div class="form-group">
-                        <label>NIT de la empresa</label>
-                        <input type="text" name="nit_empresa" value="{% if proyecto_editar %}{{ proyecto_editar.nit_empresa }}{% endif %}" required placeholder="Ej: 900.123.456-7">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Teléfono de contacto</label>
-                        <input type="tel" name="telefono" value="{% if proyecto_editar %}{{ proyecto_editar.telefono }}{% endif %}" required placeholder="Ej: (604) 123-4567">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Dirección del proyecto</label>
-                        <input type="text" name="direccion" value="{% if proyecto_editar %}{{ proyecto_editar.direccion }}{% endif %}" required placeholder="Dirección completa del proyecto">
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label>Tipo de servicio requerido</label>
-                        <select name="servicio" required>
-                            <option value="">Seleccione un servicio</option>
-                            <option value="estudios" {% if proyecto_editar and proyecto_editar.servicio == 'estudios' %}selected{% endif %}>Estudios y Diseños</option>
-                            <option value="construccion" {% if proyecto_editar and proyecto_editar.servicio == 'construccion' %}selected{% endif %}>Construcción Mixta</option>
-                            <option value="metalica" {% if proyecto_editar and proyecto_editar.servicio == 'metalica' %}selected{% endif %}>Infraestructura Metálica</option>
-                            <option value="civil" {% if proyecto_editar and proyecto_editar.servicio == 'civil' %}selected{% endif %}>Obras Civiles</option>
-                            <option value="mantenimiento" {% if proyecto_editar and proyecto_editar.servicio == 'mantenimiento' %}selected{% endif %}>Mantenimiento Industrial</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Fecha estimada de inicio</label>
-                        <input type="date" name="fecha" value="{% if proyecto_editar %}{{ proyecto_editar.fecha.strftime('%Y-%m-%d') }}{% endif %}" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Presupuesto estimado</label>
-                        <input type="number" name="presupuesto" value="{% if proyecto_editar %}{{ proyecto_editar.presupuesto }}{% endif %}" placeholder="Presupuesto en COP" required>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label>Descripción del proyecto</label>
-                        <textarea name="descripcion" rows="4" placeholder="Describa los detalles específicos de su proyecto..." required>{% if proyecto_editar %}{{ proyecto_editar.descripcion }}{% endif %}</textarea>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label>Documento técnico (opcional)</label>
-                        <input type="file" name="archivo_tecnico" accept=".pdf,.doc,.docx,.xls,.xlsx">
-                        {% if proyecto_editar and proyecto_editar.archivo_tecnico %}
-                        <small class="file-info">Archivo actual: <a href="{{ url_for('download_file', filename=proyecto_editar.archivo_tecnico) }}" download>{{ proyecto_editar.archivo_tecnico }}</a></small>
-                        {% endif %}
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label>Plano o dibujo (opcional)</label>
-                        <input type="file" name="plano" accept=".pdf,.jpg,.jpeg,.png,.dwg">
-                        {% if proyecto_editar and proyecto_editar.plano %}
-                        <small class="file-info">Archivo actual: <a href="{{ url_for('download_file', filename=proyecto_editar.plano) }}" download>{{ proyecto_editar.plano }}</a></small>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <div class="form-footer">
+    <section>
+        <div class="dashboard-grid">
+            <!-- Panel izquierdo: Formulario de cotización -->
+            <section class="cotizacion-panel">
+                <div class="form-card">
                     {% if proyecto_editar %}
-                    <button type="submit" class="btn btn-cotizar">Actualizar Proyecto</button>
-                    <a href="{{ url_for('user_dashboard') }}" class="btn btn-sec" style="margin-left: 10px;">Cancelar</a>
+                    <h2>Editar Proyecto</h2>
+                    <p class="form-subtitle">Modifica los detalles de tu proyecto</p>
                     {% else %}
-                    <button type="submit" class="btn btn-cotizar">Solicitar Cotización</button>
+                    <h2>Solicitud de Cotización</h2>
+                    <p class="form-subtitle">Complete los detalles de su proyecto para recibir una cotización
+                        personalizada
+                    </p>
+                    {% endif %}
+
+                    <form
+                        action="{% if proyecto_editar %}{{ url_for('editar_proyecto', proyecto_id=proyecto_editar.id) }}{% else %}{{ url_for('cotizacion') }}{% endif %}"
+                        method="POST" enctype="multipart/form-data" class="cotizacion-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Nombre de la empresa</label>
+                                <input type="text" name="nombre_empresa"
+                                    value="{% if proyecto_editar %}{{ proyecto_editar.nombre_empresa }}{% endif %}"
+                                    required placeholder="Ej: Constructora ABC S.A.S">
+                            </div>
+
+                            <div class="form-group">
+                                <label>NIT de la empresa</label>
+                                <input type="text" name="nit_empresa"
+                                    value="{% if proyecto_editar %}{{ proyecto_editar.nit_empresa }}{% endif %}"
+                                    required placeholder="Ej: 900.123.456-7">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Teléfono de contacto</label>
+                                <input type="tel" name="telefono"
+                                    value="{% if proyecto_editar %}{{ proyecto_editar.telefono }}{% endif %}" required
+                                    placeholder="Ej: (604) 123-4567">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Dirección del proyecto</label>
+                                <input type="text" name="direccion"
+                                    value="{% if proyecto_editar %}{{ proyecto_editar.direccion }}{% endif %}" required
+                                    placeholder="Dirección completa del proyecto">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label>Tipo de servicio requerido</label>
+                                <select name="servicio" required>
+                                    <option value="">Seleccione un servicio</option>
+                                    <option value="estudios" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='estudios' %}selected{% endif %}>Estudios y Diseños
+                                    </option>
+                                    <option value="construccion_mixta" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='construccion_mixta' %}selected{% endif %}>
+                                        Construcción
+                                        mixta</option>
+                                    <option value="infraestructura_metalica" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='infraestructura_metalica' %}selected{% endif %}>Obras
+                                        de
+                                        infraestructura metálica</option>
+                                    <option value="preparacion_sitio" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='preparacion_sitio' %}selected{% endif %}>Preparación
+                                        del
+                                        sitio</option>
+                                    <option value="construccion_edificaciones" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='construccion_edificaciones' %}selected{% endif %}>
+                                        Construcción y mantenimiento de edificaciones</option>
+                                    <option value="fachadas_metalicas" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='fachadas_metalicas' %}selected{% endif %}>Diseño y
+                                        fabricación de fachadas metálicas multiproposito</option>
+                                    <option value="infraestructura_vial" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='infraestructura_vial' %}selected{% endif %}>
+                                        Construcción
+                                        de obras de infraestructura vial</option>
+                                    <option value="estructuras_metalicas" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='estructuras_metalicas' %}selected{% endif %}>
+                                        Fabricación
+                                        e instalación de estructuras metálicas</option>
+                                    <option value="instalaciones" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='instalaciones' %}selected{% endif %}>Diseño y
+                                        desarrollo
+                                        de instalaciones</option>
+                                    <option value="energia_electrica" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='energia_electrica' %}selected{% endif %}>Energia
+                                        eléctrica y solar</option>
+                                    <option value="roceria_zonas_verdes" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='roceria_zonas_verdes' %}selected{% endif %}>
+                                        Actividades
+                                        de rocería y mantenimiento de zonas verdes</option>
+                                    <option value="mantenimiento_instalaciones" {% if proyecto_editar and
+                                        proyecto_editar.servicio=='mantenimiento_instalaciones' %}selected{% endif %}>
+                                        Mantenimiento de instalaciones</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Fecha estimada de inicio</label>
+                                <input type="date" name="fecha"
+                                    value="{% if proyecto_editar %}{{ proyecto_editar.fecha.strftime('%Y-%m-%d') }}{% endif %}"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Presupuesto estimado</label>
+                                <input type="number" name="presupuesto"
+                                    value="{% if proyecto_editar %}{{ proyecto_editar.presupuesto }}{% endif %}"
+                                    placeholder="Presupuesto en COP" required>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label>Descripción del proyecto</label>
+                                <textarea name="descripcion" rows="4"
+                                    placeholder="Describa los detalles específicos de su proyecto..."
+                                    required>{% if proyecto_editar %}{{ proyecto_editar.descripcion }}{% endif %}</textarea>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label>Documento técnico (opcional)</label>
+                                <input type="file" name="archivo_tecnico" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                                {% if proyecto_editar and proyecto_editar.archivo_tecnico %}
+                                <small class="file-info">Archivo actual: <a
+                                        href="{{ url_for('download_file', filename=proyecto_editar.archivo_tecnico) }}"
+                                        download>{{ proyecto_editar.archivo_tecnico }}</a></small>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label>Plano o dibujo (opcional)</label>
+                                <input type="file" name="plano" accept=".pdf,.jpg,.jpeg,.png,.dwg">
+                                {% if proyecto_editar and proyecto_editar.plano %}
+                                <small class="file-info">Archivo actual: <a
+                                        href="{{ url_for('download_file', filename=proyecto_editar.plano) }}"
+                                        download>{{
+                                        proyecto_editar.plano }}</a></small>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-footer">
+                            {% if proyecto_editar %}
+                            <button type="submit" class="btn btn-cotizar">Actualizar Proyecto</button>
+                            <a href="{{ url_for('user_dashboard') }}" class="btn btn-sec"
+                                style="margin-left: 10px;">Cancelar</a>
+                            {% else %}
+                            <button type="submit" class="btn btn-cotizar">Solicitar Cotización</button>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Panel derecho: Proyectos del usuario -->
+            <section class="proyectos-panel">
+                <div class="proyectos-card">
+                    <h2>Mis Proyectos</h2>
+                    <p class="form-subtitle">Historial de cotizaciones solicitadas</p>
+
+                    {% if proyectos %}
+                    <div class="proyectos-table-container">
+                        <table class="proyectos-table">
+                            <thead>
+                                <tr>
+                                    <th>Empresa</th>
+                                    <th>Servicio</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Presupuesto</th>
+                                    <th>Archivos</th>
+                                    <th>Fecha Solicitud</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for proyecto in proyectos %}
+                                <tr>
+                                    <td>{{ proyecto.nombre_empresa }}</td>
+                                    <td>{{ proyecto.servicio }}</td>
+                                    <td>{{ proyecto.fecha.strftime('%d/%m/%Y') }}</td>
+                                    <td>${{ "{:,.0f}".format(proyecto.presupuesto) }} COP</td>
+                                    <td>
+                                        {% if proyecto.archivo_tecnico %}
+                                        <a href="{{ url_for('download_file', filename=proyecto.archivo_tecnico) }}"
+                                            class="file-link" download>Doc</a>
+                                        {% endif %}
+                                        {% if proyecto.plano %}
+                                        <a href="{{ url_for('download_file', filename=proyecto.plano) }}"
+                                            class="file-link" download>Plano</a>
+                                        {% endif %}
+                                        {% if not proyecto.archivo_tecnico and not proyecto.plano %}
+                                        -
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ proyecto.fecha_creacion.strftime('%d/%m/%Y %H:%M') }}</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <div class="action-column">
+                                                <a href="{{ url_for('editar_proyecto', proyecto_id=proyecto.id) }}"
+                                                    class="btn-action btn-edit" title="Editar">
+                                                    <i class="fas fa-edit"></i> Editar
+                                                </a>
+                                                <form method="POST"
+                                                    action="{{ url_for('eliminar_proyecto', proyecto_id=proyecto.id) }}"
+                                                    class="delete-form"
+                                                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar este proyecto?');">
+                                                    <button type="submit" class="btn-action btn-delete"
+                                                        title="Eliminar">
+                                                        <i class="fas fa-trash"></i> Eliminar
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p>No has solicitado cotizaciones aún.</p>
                     {% endif %}
                 </div>
-            </form>
+            </section>
         </div>
-    </section>
-
-    <!-- Panel derecho: Proyectos del usuario -->
-    <section class="proyectos-panel">
-        <div class="proyectos-card">
-            <h2>Mis Proyectos</h2>
-            <p class="form-subtitle">Historial de cotizaciones solicitadas</p>
-
-            {% if proyectos %}
-                <div class="proyectos-table-container">
-                    <table class="proyectos-table">
-                        <thead>
-                            <tr>
-                                <th>Empresa</th>
-                                <th>Servicio</th>
-                                <th>Fecha Inicio</th>
-                                <th>Presupuesto</th>
-                                <th>Archivos</th>
-                                <th>Fecha Solicitud</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for proyecto in proyectos %}
-                            <tr>
-                                <td>{{ proyecto.nombre_empresa }}</td>
-                                <td>{{ proyecto.servicio }}</td>
-                                <td>{{ proyecto.fecha.strftime('%d/%m/%Y') }}</td>
-                                <td>${{ "{:,.0f}".format(proyecto.presupuesto) }} COP</td>
-                                <td>
-                                    {% if proyecto.archivo_tecnico %}
-                                        <a href="{{ url_for('download_file', filename=proyecto.archivo_tecnico) }}" class="file-link" download>Doc</a>
-                                    {% endif %}
-                                    {% if proyecto.plano %}
-                                        <a href="{{ url_for('download_file', filename=proyecto.plano) }}" class="file-link" download>Plano</a>
-                                    {% endif %}
-                                    {% if not proyecto.archivo_tecnico and not proyecto.plano %}
-                                        -
-                                    {% endif %}
-                                </td>
-                                <td>{{ proyecto.fecha_creacion.strftime('%d/%m/%Y %H:%M') }}</td>
-                                <td>
-                                    <div class="action-buttons">
-                                        <div class="action-column">
-                                            <a href="{{ url_for('editar_proyecto', proyecto_id=proyecto.id) }}" class="btn-action btn-edit" title="Editar">
-                                                <i class="fas fa-edit"></i> Editar
-                                            </a>
-                                            <form method="POST" action="{{ url_for('eliminar_proyecto', proyecto_id=proyecto.id) }}" class="delete-form" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este proyecto?');">
-                                                <button type="submit" class="btn-action btn-delete" title="Eliminar">
-                                                    <i class="fas fa-trash"></i> Eliminar
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            {% else %}
-                <p>No has solicitado cotizaciones aún.</p>
-            {% endif %}
-        </div>
-    </section>
 </div>
 </div>
-            </div>
-        </section>
-    </div>
+</section>
+</div>
 </div>
 
 
